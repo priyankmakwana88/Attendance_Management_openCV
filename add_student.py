@@ -19,8 +19,15 @@ cam = cv2.VideoCapture(0)
 #READ THE PRESENT DATABASE
 #MAINTAINING DATABASE OF STUDENT PRESENT
 workbook = open_workbook("database_student.xls")
+workbook2= open_workbook("attendence_database.xls")
+
 edit_sheet = copy(workbook)
+edit_sheet2= copy(workbook2)
+
 s=workbook.sheets()[0]
+s2=workbook2.sheets()[0]
+
+#READING XLS GLOBAL DB
 values = []
 for row in range(s.nrows):
 	col_value = []
@@ -30,7 +37,20 @@ for row in range(s.nrows):
 		except : pass
 		col_value.append(value)
 	values.append(col_value)
-print (values)
+#print (values)
+
+#READING XLS ATTENDENCE DB
+values2=[]
+for row in range(s2.nrows):
+	col_value = []
+	for col in range(s2.ncols):
+		value  = (s2.cell(row,col).value)
+		try : value = str(int(value))
+		except : pass
+		col_value.append(value)
+	values2.append(col_value)
+#print (values2)
+
 
 #CREATING STUDENT LIST BY ROLL NUMBER
 roll=[]
@@ -54,7 +74,7 @@ print('1\n')
 time.sleep(1)
 status,check_img=cam.read()
 cv2.imwrite('ambiguity_process/latest_suspect.jpeg',check_img)
-cam.release()
+#cam.release()
 print('\n\nPLEASE WAIT while we perform ambiguity check ')
 
 
@@ -90,16 +110,23 @@ if status == 'need_enrolement':
 	else:				#FETCHING LAST SERIAL NUMBER
 		count=int(values[-1][0])
 
-	#WRITING NEW STUDENT INFORMATION
+	#WRITING NEW STUDENT INFORMATION IN GLOBAL XLS
 	excel = edit_sheet.get_sheet(0)
 	excel.write(count+1,0,count+1)
 	excel.write(count+1,1,s_roll_number)
 	excel.write(count+1,2,s_fname)
 	excel.write(count+1,3,s_lname)
 
+	#WRITING NEW STUDENT INFORMATION IN ATTENDANCE XLS
+	excel2 = edit_sheet2.get_sheet(0)
+	excel2.write(count+1,0,s_roll_number)
+	excel2.write(count+1,1,s_fname)
+	
+
 	#SAVING THE STUDENT INTO DATABASE
 	edit_sheet.save('database_student.xls')
-	
+	edit_sheet2.save('attendence_database.xls')
+
 	os.system('mkdir Students/'+s_roll_number)
 	
 	#READING STUDENT IMAGE
