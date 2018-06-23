@@ -74,28 +74,31 @@ print('1\n')
 time.sleep(1)
 status,check_img=cam.read()
 cv2.imwrite('ambiguity_process/latest_suspect.jpeg',check_img)
-#cam.release()
+cam.release()
 print('\n\nPLEASE WAIT while we perform ambiguity check ')
 
 
 #READING SUSPECT
 status='need_enrolement'
-captured_picture = face_recognition.load_image_file("ambiguity_process/latest_suspect.jpeg")
-captured_face_encoding = face_recognition.face_encodings(captured_picture)[0]
-for i in range(0,len(roll)):
-	student_picture = face_recognition.load_image_file("Students/"+roll[i]+"/5.jpeg")	  #READING 5th PICTURE OF PRESENT STUDENT
-	student_face_encoding = face_recognition.face_encodings(student_picture)[0]		  #ENCODING THE PICTURE
-	
-	result = face_recognition.compare_faces([student_face_encoding], captured_face_encoding)  #GENERATING RESULT
-	
-	if result[0] == True:
-		print("Don't try to be smart, you already have been enrolled as "+first_name[i])
-		status='enrolled'
-		break
+
+if len(roll):
+
+	captured_picture = face_recognition.load_image_file("ambiguity_process/latest_suspect.jpeg")
+	captured_face_encoding = face_recognition.face_encodings(captured_picture)[0]
+	for i in range(0,len(roll)):
+		student_picture = face_recognition.load_image_file("Students/"+roll[i]+"/5.jpeg")	  #READING 5th PICTURE OF PRESENT STUDENT
+		student_face_encoding = face_recognition.face_encodings(student_picture)[0]		  #ENCODING THE PICTURE
+		
+		result = face_recognition.compare_faces([student_face_encoding], captured_face_encoding)  #GENERATING RESULT
+		
+		if result[0] == True:
+			print("Don't try to be smart, you already have been enrolled as "+first_name[i])
+			status='enrolled'
+			break
 
 
 if status == 'need_enrolement':
-
+	cam = cv2.VideoCapture(0)
 	#READING STUDENT INFORMATION
 	s_fname=input("Enter student's first name : ")
 	s_lname=input("Enter student's last name : ")
