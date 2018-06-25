@@ -85,9 +85,9 @@ if status=='not_marked':
 		enrolled = face_recognition.load_image_file("Students/"+str(roll[i-1])+"/5.jpeg") #loading 5th image for check
 		enrolled_encoding = face_recognition.face_encodings(enrolled)[0]	
 		enrolled_face_encodings.append(enrolled_encoding)
-		enrolled_face_names.append(first_name)
+		enrolled_face_names.append(first_name[i-1])
 	#print(enrolled_face_encodings)	---- list of array
-	#print(enrolled_face_names)	---- list of list
+	#print(enrolled_face_names)	---- list
 	
 	#COMPARING ENCODINGS
 	present_today_roll=[]
