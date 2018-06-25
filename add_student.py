@@ -9,6 +9,7 @@ from xlutils.copy import copy
 import os
 import time
 
+
 #IMPORTING XML FILE
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascase = cv2.CascadeClassifier('haarcascade_eye.xml')
@@ -37,7 +38,6 @@ for row in range(s.nrows):
 		except : pass
 		col_value.append(value)
 	values.append(col_value)
-#print (values)
 
 #READING XLS ATTENDENCE DB
 values2=[]
@@ -49,7 +49,6 @@ for row in range(s2.nrows):
 		except : pass
 		col_value.append(value)
 	values2.append(col_value)
-#print (values2)
 
 
 #CREATING STUDENT LIST BY ROLL NUMBER
@@ -80,21 +79,20 @@ print('\n\nPLEASE WAIT while we perform ambiguity check ')
 
 #READING SUSPECT
 status='need_enrolement'
-
 if len(roll):
-
 	captured_picture = face_recognition.load_image_file("ambiguity_process/latest_suspect.jpeg")
 	captured_face_encoding = face_recognition.face_encodings(captured_picture)[0]
-	for i in range(0,len(roll)):
-		student_picture = face_recognition.load_image_file("Students/"+roll[i]+"/5.jpeg")	  #READING 5th PICTURE OF PRESENT STUDENT
-		student_face_encoding = face_recognition.face_encodings(student_picture)[0]		  #ENCODING THE PICTURE
-		
-		result = face_recognition.compare_faces([student_face_encoding], captured_face_encoding)  #GENERATING RESULT
-		
-		if result[0] == True:
-			print("Don't try to be smart, you already have been enrolled as "+first_name[i])
-			status='enrolled'
-			break
+	if len(captured_face_encoding)>0:
+		for i in range(0,len(roll)):
+			student_picture = face_recognition.load_image_file("Students/"+roll[i]+"/5.jpeg")  #READING 5th PICTURE OF PRESENT STUDENT
+			student_face_encoding = face_recognition.face_encodings(student_picture)[0]		  #ENCODING THE PICTURE
+			result = face_recognition.compare_faces([student_face_encoding], captured_face_encoding)  #GENERATING RESULT
+			if result[0] == True:
+				print("Don't try to be smart, you already have been enrolled as "+first_name[i])
+				status='enrolled'
+				break
+	else:
+		print('Your face is not visible')
 
 
 if status == 'need_enrolement':
@@ -104,9 +102,6 @@ if status == 'need_enrolement':
 	s_lname=input("Enter student's last name : ")
 	s_roll_number=input("Enter student's roll number : ")
 	
-	
-
-
 	#CHECKING COUNT IN DATABASE XLS
 	if values[-1][0]=='Sno':	#EMPTY SHEET
 		count=0
