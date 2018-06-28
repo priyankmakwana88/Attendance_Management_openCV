@@ -101,7 +101,8 @@ if status == 'need_enrolement':
 	s_fname=input("Enter student's first name : ")
 	s_lname=input("Enter student's last name : ")
 	s_roll_number=input("Enter student's roll number : ")
-	
+	s_email=input("Enter your email : ")	
+
 	#CHECKING COUNT IN DATABASE XLS
 	if values[-1][0]=='Sno':	#EMPTY SHEET
 		count=0
@@ -114,6 +115,7 @@ if status == 'need_enrolement':
 	excel.write(count+1,1,s_roll_number)
 	excel.write(count+1,2,s_fname)
 	excel.write(count+1,3,s_lname)
+	excel.write(count+1,4,s_email)
 
 	#WRITING NEW STUDENT INFORMATION IN ATTENDANCE XLS
 	excel2 = edit_sheet2.get_sheet(0)
