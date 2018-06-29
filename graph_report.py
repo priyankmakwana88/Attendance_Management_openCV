@@ -23,6 +23,23 @@ edit_sheet = copy(workbook)
 s=workbook.sheets()[0]
 excel = edit_sheet.get_sheet(0)
 
+
+workbook2 = open_workbook("database_student.xls")
+edit_sheet2 = copy(workbook2)
+s2=workbook2.sheets()[0]
+
+#READING XLS GLOBAL DB
+values_global = []
+for row in range(s2.nrows):
+	col_value = []
+	for col in range(s2.ncols):
+		value  = (s2.cell(row,col).value)
+		try : value = str(int(value))
+		except : pass
+		col_value.append(value)
+	values_global.append(col_value)
+print(values_global)
+
 #READING XLS DATA
 values = []
 for row in range(s.nrows):
@@ -100,36 +117,40 @@ for i in range(1,len(values)):
 	percent_attendence=(total_present*100)/total_class
 	if percent_attendence<70:
 		mail_list.append(values[i][1])
-print(mail_list)
 
-'''
-#SENDING MAIL
+mail_list_email=[]
+for i in range(len(mail_list)):
+	for j in range(len(values_global)):
+		if mail_list[i] in values_global[j]:
+			mail_list_email.append(values_global[j][-1])
 
-#
-msg['From'] = str(input('Enter your mai id:- '))
+
+
+#SENDING MAIL FOR MAIL-LIST
+msg['From'] = str('projectnapster88@gmail.com')
 
 # take password in secretive form
-pswd = getpass.getpass('Password:')
+pswd = 'projectnapster@sys1'
 
+for i in range(len(mail_list_email)):
+	msg['To'] = str(mail_list_email[i])
+	msg['Subject'] = str('Regarding low attendance!')
 
-msg['To'] = str(input('Enter receiver;s mail ID:- '))
-msg['Subject'] = str(input('ENter the subject:- '))
+	message = 'Hello,\n\tThis is to inform you that your attendance is running low!\nPlease, specify the reason at the office else a strict action will be taken against you.\n\nThank You.'
 
-message = input('MESsage:- ')
-# connection establishment using smtp object   
-mail = smtplib.SMTP('smtp.gmail.com',587)
-mail.ehlo()
-mail.starttls()
-
-# login in the server
-mail.login(msg['From'],pswd)
-
-# send the mail to the receiver
-mail.sendmail(msg['From'],msg['To'],message)
-print('Your msg has been sent')
+	# connection establishment using smtp object   
+	mail = smtplib.SMTP('smtp.gmail.com',587)
+	mail.ehlo()
+	mail.starttls()
+	
+	# login in the server
+	mail.login(msg['From'],pswd)
+	
+	# send the mail to the receiver
+	mail.sendmail(msg['From'],msg['To'],message)
 mail.close()
-#
-'''
+	
+
 
 
 
