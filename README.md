@@ -17,7 +17,7 @@ This program allows you to mark the attendence in 3 different ways.
 ->Report status of the class is generated in graphical format.
 ->Report status of individual student can be generated upon request.
 
-# 3. Email notification
+# 4. Email notification
 
 Students are continously monitered for their attendance for 70%(modifyable) mark. Any student as soon as crosses the mark, an email from PROJECTNAPSTER is generated and sent to their specified emails for warnings.
 
