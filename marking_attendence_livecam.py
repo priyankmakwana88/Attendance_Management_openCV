@@ -74,7 +74,7 @@ if status=='not_marked':
 	enrolled_face_names=[]
 	enrolled_face_rolls=[]
 	for i in range(1,len(roll)+1):
-		enrolled = face_recognition.load_image_file("Students/"+str(roll[i-1])+"/5.jpeg") #loading 5th image for check
+		enrolled = face_recognition.load_image_file("Students/"+str(roll[i-1])+"/7.jpeg") #loading 5th image for check
 		enrolled_encoding = face_recognition.face_encodings(enrolled)[0]	
 		enrolled_face_encodings.append(enrolled_encoding)
 		enrolled_face_names.append(first_name[i-1])
