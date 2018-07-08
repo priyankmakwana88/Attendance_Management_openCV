@@ -124,33 +124,43 @@ for i in range(len(mail_list)):
 		if mail_list[i] in values_global[j]:
 			mail_list_email.append(values_global[j][-1])
 
+#CROSS_CHECKING
+print("Student with low attendance : \n")
+for i in mail_list:	
+	print(i)
 
 
-#SENDING MAIL FOR MAIL-LIST
-msg['From'] = str('projectnapster88@gmail.com')
+want_send='n'
+want_send=input("\n\nDo you want to send the mail to the listed? (y/n) ")
 
-# take password in secretive form
-pswd = 'projectnapster@sys1'
-
-for i in range(len(mail_list_email)):
-	msg['To'] = str(mail_list_email[i])
-	msg['Subject'] = str('Regarding low attendance!')
-
-	message = 'Hello,\n\tThis is to inform you that your attendance is running low!\nPlease, specify the reason at the office else a strict action will be taken against you.\n\nThank You.'
-
-	# connection establishment using smtp object   
-	mail = smtplib.SMTP('smtp.gmail.com',587)
-	mail.ehlo()
-	mail.starttls()
+#SENDING MAIL
+if want_send=='y' or want_send=='Y':
+	#SENDING MAIL FOR MAIL-LIST
+	msg['From'] = str('projectnapster88@gmail.com')
+		
+	# take password in secretive form
+	pswd = 'projectnapster@sys1'
+		
+	for i in range(len(mail_list_email)):
+		#print(mail_list_email[i])
+		To = str(mail_list_email[i])
+		msg['Subject'] = str('Regarding low attendance!')
+		
+		message = 'Hello,\n\tThis is to inform you that your attendance is running low!\nPlease, specify the reason at the office else a 	strict action will be taken against you.\n\nThank You.'
+		print(To)
+		# connection establishment using smtp object   
+		mail = smtplib.SMTP('smtp.gmail.com',587)
+		mail.ehlo()
+		mail.starttls()
+		
+		# login in the server
+		mail.login(msg['From'],pswd)
+		
+		# send the mail to the receiver
+		mail.sendmail(msg['From'],To,message)
+		mail.close()
+		
 	
-	# login in the server
-	mail.login(msg['From'],pswd)
-	
-	# send the mail to the receiver
-	mail.sendmail(msg['From'],msg['To'],message)
-mail.close()
-	
-
 
 
 
