@@ -138,8 +138,8 @@ if want_send=='y' or want_send=='Y':
 	#SENDING MAIL FOR MAIL-LIST
 	msg['From'] = str('projectnapster88@gmail.com')
 		
-	# take password in secretive form
-	pswd = 'projectnapster@sys1'
+	# take password in encrypted form
+	pswd = '******'
 		
 	for i in range(len(mail_list_email)):
 		#print(mail_list_email[i])
