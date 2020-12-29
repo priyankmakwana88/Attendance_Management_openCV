@@ -7,7 +7,7 @@ Additional check for ambiguity is implemented, i.e. if a student tries to regist
 
 # 2. Select the type by which you want to mark the attendance
 
-This program allows you to mark the attendence in 3 different ways.
+This program allows you to mark the attendance in 3 different ways.
 -> By giving the image paath of the existing image of the class.
 -> By taking real time picture of the class using any webcam.
 -> By starting the live camera and detecting the students in real time.
