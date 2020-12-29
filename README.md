@@ -1,7 +1,7 @@
 # Attendance-Management---OpenCV
 It adds the student into a global database and marks the attendance of the each student using live camera or picture of the class.
 
-# 1. Add the student into global datbase
+# 1. Add the student into global database
 
 Additional check for ambiguity is implemented, i.e. if a student tries to register himself/herself multiple times is restricted by the program.
 
